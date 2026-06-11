@@ -25,14 +25,14 @@
   },
   {
     "Id": "26f1d884-d646-46e8-9055-20513828cfcb",
-    "Name": "Fresh Organic s",
-    "Stock": 150,
+    "Name": "Fresh Organic Apples",
+    "Stock": 4,
     "Department": 0,
     "WeightValue": 1.5,
     "Unit": 1,
     "CostPrice": 2.50,
-    "SellingPrice": 3.99,
-    "Location": "Aisle 3 - Shelf A",
+    "SellingPrice": 4.25,
+    "Location": "Aisle 3 - Shelf B",
     "ExpirationDate": "2026-12-31T00:00:00"
   }
 ]

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZQxBUovoT7Q=",
+  "dgSpecHash": "lO2fysYqMNU=",
   "success": true,
-  "projectFilePath": "D:\\REPO\\Agullto_IMS.API\\Agullto_IMS.API.csproj",
+  "projectFilePath": "D:\\REPO\\Agulto_IMS.APIs\\Agullto_IMS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eiros\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",
     "C:\\Users\\eiros\\.nuget\\packages\\microsoft.data.sqlclient\\7.0.1\\microsoft.data.sqlclient.7.0.1.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\REPO\\Agullto_IMS.API\\Agullto_IMS.API.csproj": {}
+    "D:\\REPO\\Agulto_IMS.APIs\\Agullto_IMS.API.csproj": {}
   },
   "projects": {
-    "D:\\REPO\\Agullto_IMS.API\\Agullto_IMS.API.csproj": {
+    "D:\\REPO\\Agulto_IMS.APIs\\Agullto_IMS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\REPO\\Agullto_IMS.API\\Agullto_IMS.API.csproj",
+        "projectUniqueName": "D:\\REPO\\Agulto_IMS.APIs\\Agullto_IMS.API.csproj",
         "projectName": "Agullto_IMS.API",
-        "projectPath": "D:\\REPO\\Agullto_IMS.API\\Agullto_IMS.API.csproj",
+        "projectPath": "D:\\REPO\\Agulto_IMS.APIs\\Agullto_IMS.API.csproj",
         "packagesPath": "C:\\Users\\eiros\\.nuget\\packages\\",
-        "outputPath": "D:\\REPO\\Agullto_IMS.API\\obj\\",
+        "outputPath": "D:\\REPO\\Agulto_IMS.APIs\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
