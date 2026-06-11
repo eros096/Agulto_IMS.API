@@ -1,0 +1,6 @@
+@Agullto_IMS.API_HostAddress = http://localhost:5065
+
+GET {{Agullto_IMS.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
