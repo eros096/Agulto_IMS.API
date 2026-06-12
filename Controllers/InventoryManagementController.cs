@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Agullto_IMS.Models;
-using Agullto_IMS.Services;
+using Agullto_IMS.Models;          // Core library models reference
+using Agullto_IMS.Services;        // Core services reference
+using Agullto_IMS.API.Models;      // Your local API folder models (ProductViewModel)
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Agullto_IMS.API.Controllers
 
         // 1. GET ALL PRODUCTS -> GET: api/inventorymanagement
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetAllProducts()
+        public ActionResult<IEnumerable<Agullto_IMS.Models.Product>> GetAllProducts()
         {
             try
             {
@@ -45,10 +46,9 @@ namespace Agullto_IMS.API.Controllers
         }
 
         // 2. GET PRODUCT BY ID -> GET: api/inventorymanagement/{id}
-        [HttpGet("{id}")]
-        public ActionResult<Product> GetProductById(Guid id)
+        [HttpGet("{id:guid}")]
+        public ActionResult<Agullto_IMS.Models.Product> GetProductById(Guid id)
         {
-            // Input Validation
             if (id == Guid.Empty)
             {
                 return BadRequest(new { message = "The provided Product ID is invalid or empty." });
@@ -77,7 +77,7 @@ namespace Agullto_IMS.API.Controllers
 
         // 3. GET LOW STOCK ITEMS -> GET: api/inventorymanagement/low-stock
         [HttpGet("low-stock")]
-        public ActionResult<List<Product>> GetLowStockItems()
+        public ActionResult<List<Agullto_IMS.Models.Product>> GetLowStockItems()
         {
             try
             {
@@ -106,11 +106,11 @@ namespace Agullto_IMS.API.Controllers
         }
 
         // 4. CREATE PRODUCT -> POST: api/inventorymanagement
+        // Integrates ProductViewModel from your local models folder
         [HttpPost]
-        public ActionResult<Product> CreateProduct([FromBody] Product product)
+        public ActionResult<Agullto_IMS.Models.Product> CreateProduct([FromBody] ProductViewModel model)
         {
-            // Input Validation
-            if (product == null)
+            if (model == null)
             {
                 return BadRequest(new { message = "Product data payload cannot be null." });
             }
@@ -122,8 +122,23 @@ namespace Agullto_IMS.API.Controllers
 
             try
             {
-                _productService.AddProduct(product);
-                return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+                // Map the local ViewModel to your core data model type
+                var newProduct = new Agullto_IMS.Models.Product
+                {
+                    Id = Guid.NewGuid(), // Server explicitly controls the new Guid generation
+                    Name = model.Name,
+                    Stock = model.Stock,
+                    Department = model.Department,
+                    WeightValue = model.WeightValue,
+                    Unit = model.Unit,
+                    CostPrice = model.CostPrice,
+                    SellingPrice = model.SellingPrice,
+                    Location = model.Location,
+                    ExpirationDate = model.ExpirationDate
+                };
+
+                _productService.AddProduct(newProduct);
+                return CreatedAtAction(nameof(GetProductById), new { id = newProduct.Id }, newProduct);
             }
             catch (Exception ex)
             {
@@ -136,19 +151,19 @@ namespace Agullto_IMS.API.Controllers
             }
         }
 
-        // 5. UPDATE PRODUCT -> PUT: api/inventorymanagement
-        [HttpPut]
-        public IActionResult UpdateProduct([FromBody] Product product)
+        // 5. UPDATE PRODUCT -> PUT: api/inventorymanagement/{id}
+        // Accepts the target ID in the route URL, and properties via the input ViewModel
+        [HttpPut("{id:guid}")]
+        public IActionResult UpdateProduct(Guid id, [FromBody] ProductViewModel model)
         {
-            // Input Validation
-            if (product == null)
+            if (model == null)
             {
                 return BadRequest(new { message = "Product update data payload cannot be null." });
             }
 
-            if (product.Id == Guid.Empty)
+            if (id == Guid.Empty)
             {
-                return BadRequest(new { message = "A valid Product ID must be provided within the data body for updating." });
+                return BadRequest(new { message = "A valid Product ID must be provided within the URL route for updating." });
             }
 
             if (!ModelState.IsValid)
@@ -158,17 +173,32 @@ namespace Agullto_IMS.API.Controllers
 
             try
             {
-                bool wasUpdated = _productService.UpdateProduct(product);
+                // Map the updated values onto your core data structure explicitly targeting the route ID
+                var updatedProduct = new Agullto_IMS.Models.Product
+                {
+                    Id = id,
+                    Name = model.Name,
+                    Stock = model.Stock,
+                    Department = model.Department,
+                    WeightValue = model.WeightValue,
+                    Unit = model.Unit,
+                    CostPrice = model.CostPrice,
+                    SellingPrice = model.SellingPrice,
+                    Location = model.Location,
+                    ExpirationDate = model.ExpirationDate
+                };
+
+                bool wasUpdated = _productService.UpdateProduct(updatedProduct);
                 if (!wasUpdated)
                 {
-                    return NotFound(new { message = $"Failed to update. Product with ID {product.Id} not found." });
+                    return NotFound(new { message = $"Failed to update. Product with ID {id} not found." });
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in UpdateProduct for ID {product.Id}: {ex.Message}");
+                Console.WriteLine($"Error in UpdateProduct for ID {id}: {ex.Message}");
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
                     message = "An error occurred while updating the product entry.",
@@ -178,10 +208,9 @@ namespace Agullto_IMS.API.Controllers
         }
 
         // 6. DELETE PRODUCT -> DELETE: api/inventorymanagement/{id}
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         public IActionResult DeleteProduct(Guid id)
         {
-            // Input Validation
             if (id == Guid.Empty)
             {
                 return BadRequest(new { message = "The provided Product ID is invalid or empty." });

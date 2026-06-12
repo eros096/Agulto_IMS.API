@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Agullto_IMS.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91856b839d402c0435b792eed9f3c10817420b48")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca57dc2ffb1d904f576ff8d508555df1edeb57ab")]
 [assembly: System.Reflection.AssemblyProductAttribute("Agullto_IMS.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Agullto_IMS.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
